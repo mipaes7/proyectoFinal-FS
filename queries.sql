@@ -81,6 +81,11 @@ INSERT INTO user_library (user_id, manga_id, status) VALUES
 SELECT username, email, password, isadmin, islogged
 FROM users
 
+--Read user by email
+SELECT username, email, password, isadmin, islogged
+FROM users
+WHERE email='charlie.black@example.com'
+
 --Read All mangas
 SELECT title, author, synopsis, cover_image_url, genres, themes
 FROM manga
@@ -133,7 +138,13 @@ SET
     isadmin = false,           
     islogged = false           
 WHERE 
-    email = 'charlie.black@example.com'; 
+    email = 'charlie.black@example.com';
+
+--Toggle logged status
+UPDATE users
+SET islogged = NOT islogged
+WHERE email = 'charlie.black@example.com'
+RETURNING *;
 
 --Update the manga information
 UPDATE manga
