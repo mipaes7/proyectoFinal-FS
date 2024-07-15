@@ -13,20 +13,18 @@ const mangaQueries = {
     updateManga: `
     UPDATE manga
     SET 
-        title = $1,
-        author = $2,
-        synopsis = $3,
-        cover_image_url = $4,
-        genres = $5,
-        themes = $6
+        synopsis = $1,
+        cover_image_url = $2,
+        genres = $3,
+        themes = $4
     WHERE 
-        manga_id = $7;`,
+        title = $5;`,
 
     // Delete the manga
     deleteManga: `
     DELETE FROM manga
     WHERE 
-        manga_id = $1;`
+        title = $1;`
 };
 
 module.exports = mangaQueries;

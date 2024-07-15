@@ -81,6 +81,11 @@ INSERT INTO user_library (user_id, manga_id, status) VALUES
 SELECT username, email, password, isadmin, islogged
 FROM users
 
+--Read user by email
+SELECT username, email, password, isadmin, islogged
+FROM users
+WHERE email='charlie.black@example.com'
+
 --Read All mangas
 SELECT title, author, synopsis, cover_image_url, genres, themes
 FROM manga
@@ -133,19 +138,23 @@ SET
     isadmin = false,           
     islogged = false           
 WHERE 
-    email = 'charlie.black@example.com'; 
+    email = 'charlie.black@example.com';
+
+--Toggle logged status
+UPDATE users
+SET islogged = NOT islogged
+WHERE email = 'charlie.black@example.com'
+RETURNING *;
 
 --Update the manga information
 UPDATE manga
 SET 
-    title = 'Updated Manga Title',
-    author = 'John Smith',
     synopsis = 'This is the updated synopsis of the example manga. The hero continues their adventure with new challenges.',
     cover_image_url = 'https://example.com/images/manga/updated_example.jpg',
     genres = 'Action, Adventure, Drama',
     themes = 'Heroic Journey, Mythology, Friendship'
 WHERE 
-    manga_id = 1;  
+    title = 1;  
 
 --Update status of a manga entry
 UPDATE user_library
@@ -161,7 +170,7 @@ WHERE
 --Delete the manga
 DELETE FROM manga
 WHERE 
-    manga_id = 1;
+    title = 'Example Manga Title';
 
 --Delete manga entry from user's library
 DELETE FROM user_library
