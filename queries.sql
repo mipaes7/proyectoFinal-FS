@@ -149,14 +149,12 @@ RETURNING *;
 --Update the manga information
 UPDATE manga
 SET 
-    title = 'Updated Manga Title',
-    author = 'John Smith',
     synopsis = 'This is the updated synopsis of the example manga. The hero continues their adventure with new challenges.',
     cover_image_url = 'https://example.com/images/manga/updated_example.jpg',
     genres = 'Action, Adventure, Drama',
     themes = 'Heroic Journey, Mythology, Friendship'
 WHERE 
-    manga_id = 1;  
+    title = 1;  
 
 --Update status of a manga entry
 UPDATE user_library
@@ -172,7 +170,7 @@ WHERE
 --Delete the manga
 DELETE FROM manga
 WHERE 
-    manga_id = 1;
+    title = 'Example Manga Title';
 
 --Delete manga entry from user's library
 DELETE FROM user_library
