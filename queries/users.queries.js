@@ -12,24 +12,30 @@ const userQueries = {
 
     // Create a new user
     createUser: `
-    INSERT INTO users (username, email, password, isadmin)
-    VALUES ($1, $2, $3, $4) RETURNING *;`,
+    INSERT INTO users (username, email, password, isadmin, islogged)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;`,
 
     // Update user by email
     updateUserByEmail: `
     UPDATE users
-    SET 
-        username = $1,
-        password = $2, 
-        isadmin = $3,           
-        islogged = $4           
-    WHERE 
-        email = $5;`,
+    SET
+    username = COALESCE($1, username),
+    password = COALESCE($2, password),
+    isadmin = COALESCE($3, isadmin),
+    islogged = COALESCE($4, islogged)
+    WHERE email = $5;`,
 
     // Toggle islogged field
-    toggleIsLogged: `
+    setLoggedTrue: `
     UPDATE users
-    SET islogged = NOT islogged
+    SET islogged = true
+    WHERE email = $1
+    RETURNING *;`,
+
+    setLoggedFalse: `
+    UPDATE users
+    SET islogged = false
     WHERE email = $1
     RETURNING *;`,
 

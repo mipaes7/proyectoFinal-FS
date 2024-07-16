@@ -11,14 +11,21 @@ const morgan = require("./middlewares/morgan");
 app.use(morgan(':method :url :status - :response-time ms :body'));
 
 // Importar Rutas API
+const usersRoutes = require('./routes/users.routes');
+const mangasRoutes = require('./routes/manga.routes');
+const libraryRoutes = require('./routes/library.routes');
+
 
 // Importar Rutas Web
 
 app.use(express.json()); // Habilito recepción de JSON en servidor
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+// app.use(cookieParser());
 
 //Rutas API
+app.use('/api/users', usersRoutes);
+app.use('/api/mangas', mangasRoutes);
+app.use('/api/libraries', libraryRoutes);
 
 //Rutas Web
 

@@ -33,11 +33,12 @@ const getAllUsers = async () => {
 
 const createUser = async (user) => {
     const { username, email, password, isadmin } = user;
+    const islogged = false; 
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.createUser, [username, email, password, isadmin]);
-        result = data.rowCount;
+        const data = await client.query(queries.createUser, [username, email, password, isadmin, islogged]);
+        result = data.rows[0]; 
     } catch (err) {
         console.log(err);
         throw err;
@@ -52,7 +53,10 @@ const updateUser = async (user) => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.updateUserByEmail, [username, password, isadmin, islogged, email]);
+        const data = await client.query(
+            queries.updateUserByEmail,
+            [username, password, isadmin, islogged, email]
+        );
         result = data.rowCount;
     } catch (err) {
         console.log(err);
@@ -63,11 +67,26 @@ const updateUser = async (user) => {
     return result;
 };
 
-const toggleIsLogged = async (email) => {
+const setLoggedTrue = async (email) => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.toggleIsLogged, [email]);
+        const data = await client.query(queries.setLoggedTrue, [email]);
+        result = data.rowCount;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const setLoggedFalse = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.setLoggedFalse, [email]);
         result = data.rowCount;
     } catch (error) {
         console.log(error);
@@ -98,7 +117,8 @@ module.exports = {
     getUserByEmail,
     createUser,
     updateUser,
-    toggleIsLogged,
+    setLoggedTrue,
+    setLoggedFalse,
     deleteUser
 };
 
@@ -107,10 +127,10 @@ module.exports = {
 // getUserByEmail('charlie.black@example.com').then(data => console.log(data));
 
 // const newUser = {
-    // username: 'Jonás',
-    // email: 'jonas@email.com',
-    // password: 'jonipass',
-    // isadmin: true
+//     "username": "Jeremías",
+//     "email": "jeremias@email.com",
+//     "password": "jeremiaspass",
+//     "isadmin": false
 // }
 
 // createUser(newUser).then(data => console.log(data));
@@ -125,6 +145,7 @@ module.exports = {
 
 // updateUser(modifiedUser).then(data => console.log(data));
 
-// toggleIsLogged('jonas@email.com').then(data => console.log(data));
+// setLoggedTrue('jonas@email.com').then(data => console.log(data));
+// setLoggedFalse('jonas@email.com').then(data => console.log(data));
 
 // deleteUser('bob.brown@example.com').then(data => console.log(data));

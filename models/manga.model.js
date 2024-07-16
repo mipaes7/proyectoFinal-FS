@@ -16,6 +16,51 @@ const getAllMangas = async () => {
     return result;
 };
 
+const getMangaByTitle = async (title) => {
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.getMangaByTitle, [`%${title}%`]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const getMangaByGenre = async (genre) => {
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.getMangaByGenre, [`%${genre}%`]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const getMangaByAuthor = async (author) => {
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.getMangaByAuthor, [`%${author}%`]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
 const createManga = async (manga) => {
     const { title, author, synopsis, cover_image_url, genres, themes } = manga;
     let client, result;
@@ -33,11 +78,14 @@ const createManga = async (manga) => {
 };
 
 const updateManga = async (manga) => {
-    const { synopsis, cover_image_url, genres, themes, title } = manga;
+    const { newTitle, author, synopsis, cover_image_url, genres, themes, title } = manga;
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.updateManga, [synopsis, cover_image_url, genres, themes, title]);
+        const data = await client.query(
+            queries.updateManga,
+            [newTitle, author, synopsis, cover_image_url, genres, themes, title]
+        );
         result = data.rowCount;
     } catch (err) {
         console.log(err);
@@ -65,12 +113,18 @@ const deleteManga = async (title) => {
 
 module.exports = {
     getAllMangas,
+    getMangaByGenre,
+    getMangaByTitle,
+    getMangaByAuthor,
     createManga,
     updateManga,
     deleteManga
 };
 
 // getAllMangas().then(data => console.log(data));
+// getMangaByGenre('ecchi').then(data => console.log(data));
+// getMangaByTitle('berserk').then(data => console.log(data));
+// getMangaByAuthor('norio').then(data => console.log(data));
 
 // const newManga = {
 //     title: 'Shigurui',
