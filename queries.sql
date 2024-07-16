@@ -142,7 +142,12 @@ WHERE
 
 --Toggle logged status
 UPDATE users
-SET islogged = NOT islogged
+SET islogged = true
+WHERE email = 'charlie.black@example.com'
+RETURNING *;
+
+UPDATE users
+SET islogged = false
 WHERE email = 'charlie.black@example.com'
 RETURNING *;
 

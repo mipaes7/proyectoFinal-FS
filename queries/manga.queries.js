@@ -4,6 +4,24 @@ const mangaQueries = {
     SELECT title, author, synopsis, cover_image_url, genres, themes
     FROM manga;`,
 
+    // Read manga by title
+    getMangaByTitle: `
+    SELECT title, author, synopsis, cover_image_url, genres, themes
+    FROM manga
+    WHERE title ILIKE $1;`,
+
+    // Read manga by genre
+    getMangaByGenre: `
+    SELECT title, author, synopsis, cover_image_url, genres, themes
+    FROM manga
+    WHERE genres ILIKE $1;`,
+
+    // Read manga by author
+    getMangaByAuthor: `
+    SELECT title, author, synopsis, cover_image_url, genres, themes
+    FROM manga
+    WHERE author ILIKE $1;`,
+
     // Create a new manga
     createManga: `
     INSERT INTO manga (title, author, synopsis, cover_image_url, genres, themes)

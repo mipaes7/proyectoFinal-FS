@@ -27,9 +27,15 @@ const userQueries = {
         email = $5;`,
 
     // Toggle islogged field
-    toggleIsLogged: `
+    setLoggedTrue: `
     UPDATE users
-    SET islogged = NOT islogged
+    SET islogged = true
+    WHERE email = $1
+    RETURNING *;`,
+
+    setLoggedFalse: `
+    UPDATE users
+    SET islogged = false
     WHERE email = $1
     RETURNING *;`,
 

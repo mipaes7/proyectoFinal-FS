@@ -63,11 +63,26 @@ const updateUser = async (user) => {
     return result;
 };
 
-const toggleIsLogged = async (email) => {
+const setLoggedTrue = async (email) => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.toggleIsLogged, [email]);
+        const data = await client.query(queries.setLoggedTrue, [email]);
+        result = data.rowCount;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const setLoggedFalse = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.setLoggedFalse, [email]);
         result = data.rowCount;
     } catch (error) {
         console.log(error);
@@ -98,7 +113,8 @@ module.exports = {
     getUserByEmail,
     createUser,
     updateUser,
-    toggleIsLogged,
+    setLoggedTrue,
+    setLoggedFalse,
     deleteUser
 };
 
@@ -125,6 +141,7 @@ module.exports = {
 
 // updateUser(modifiedUser).then(data => console.log(data));
 
-// toggleIsLogged('jonas@email.com').then(data => console.log(data));
+// setLoggedTrue('jonas@email.com').then(data => console.log(data));
+// setLoggedFalse('jonas@email.com').then(data => console.log(data));
 
 // deleteUser('bob.brown@example.com').then(data => console.log(data));
