@@ -78,11 +78,14 @@ const createManga = async (manga) => {
 };
 
 const updateManga = async (manga) => {
-    const { synopsis, cover_image_url, genres, themes, title } = manga;
+    const { newTitle, author, synopsis, cover_image_url, genres, themes, title } = manga;
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.updateManga, [synopsis, cover_image_url, genres, themes, title]);
+        const data = await client.query(
+            queries.updateManga,
+            [newTitle, author, synopsis, cover_image_url, genres, themes, title]
+        );
         result = data.rowCount;
     } catch (err) {
         console.log(err);

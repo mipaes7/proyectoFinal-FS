@@ -33,11 +33,12 @@ const getAllUsers = async () => {
 
 const createUser = async (user) => {
     const { username, email, password, isadmin } = user;
+    const islogged = false; 
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.createUser, [username, email, password, isadmin]);
-        result = data.rowCount;
+        const data = await client.query(queries.createUser, [username, email, password, isadmin, islogged]);
+        result = data.rows[0]; 
     } catch (err) {
         console.log(err);
         throw err;
@@ -52,7 +53,10 @@ const updateUser = async (user) => {
     let client, result;
     try {
         client = await pool.connect();
-        const data = await client.query(queries.updateUserByEmail, [username, password, isadmin, islogged, email]);
+        const data = await client.query(
+            queries.updateUserByEmail,
+            [username, password, isadmin, islogged, email]
+        );
         result = data.rowCount;
     } catch (err) {
         console.log(err);
@@ -123,10 +127,10 @@ module.exports = {
 // getUserByEmail('charlie.black@example.com').then(data => console.log(data));
 
 // const newUser = {
-    // username: 'Jonás',
-    // email: 'jonas@email.com',
-    // password: 'jonipass',
-    // isadmin: true
+//     "username": "Jeremías",
+//     "email": "jeremias@email.com",
+//     "password": "jeremiaspass",
+//     "isadmin": false
 // }
 
 // createUser(newUser).then(data => console.log(data));
