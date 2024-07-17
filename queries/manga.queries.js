@@ -22,6 +22,38 @@ const mangaQueries = {
     FROM manga
     WHERE author ILIKE $1;`,
 
+    //Read mangas with status reading
+    getReadingMangas: `
+    SELECT m.title, m.author, m.synopsis, m.cover_image_url, m.genres, m.themes
+    FROM user_library AS l
+    INNER JOIN users AS u ON u.user_id = l.user_id
+    INNER JOIN manga AS m ON m.manga_id = l.manga_id
+    WHERE l.status = 'Reading' AND u.email = $1;`,
+
+    //Read mangas with status reading
+    getPlanToReadMangas: `
+    SELECT m.title, m.author, m.synopsis, m.cover_image_url, m.genres, m.themes
+    FROM user_library AS l
+    INNER JOIN users AS u ON u.user_id = l.user_id
+    INNER JOIN manga AS m ON m.manga_id = l.manga_id
+    WHERE l.status = 'Plan To Read' AND u.email = $1;`,
+
+    //Read mangas with status reading
+    getDroppedMangas: `
+    SELECT m.title, m.author, m.synopsis, m.cover_image_url, m.genres, m.themes
+    FROM user_library AS l
+    INNER JOIN users AS u ON u.user_id = l.user_id
+    INNER JOIN manga AS m ON m.manga_id = l.manga_id
+    WHERE l.status = 'Dropped' AND u.email = $1;`,
+
+    //Read mangas with status reading
+    getFinishedMangas: `
+    SELECT m.title, m.author, m.synopsis, m.cover_image_url, m.genres, m.themes
+    FROM user_library AS l
+    INNER JOIN users AS u ON u.user_id = l.user_id
+    INNER JOIN manga AS m ON m.manga_id = l.manga_id
+    WHERE l.status = 'Finished' AND u.email = $1;`,
+
     // Create a new manga
     createManga: `
     INSERT INTO manga (title, author, synopsis, cover_image_url, genres, themes)

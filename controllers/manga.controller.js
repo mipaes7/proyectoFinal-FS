@@ -60,6 +60,50 @@ const createMangaController = async (req, res) => {
     }
 };
 
+const getAllReadingMangasController = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const mangas = await manga.getAllReadingMangas(email);
+        res.status(200).json(mangas);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const getAllPlanToReadMangasController = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const mangas = await manga.getAllPlanToReadMangas(email);
+        res.status(200).json(mangas);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const getAllFinishedMangasController = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const mangas = await manga.getAllFinishedMangas(email);
+        res.status(200).json(mangas);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+const getAllDroppedMangasController = async (req, res) => {
+    const { email } = req.params;
+    try {
+        const mangas = await manga.getAllDroppedMangas(email);
+        res.status(200).json(mangas);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
 const updateMangaController = async (req, res) => {
     const modifiedManga = req.body;
     if ("title" in modifiedManga) {
@@ -95,6 +139,10 @@ module.exports = {
     getMangaByTitleController,
     getMangaByGenreController,
     getMangaByAuthorController,
+    getAllReadingMangasController,
+    getAllPlanToReadMangasController,
+    getAllFinishedMangasController,
+    getAllDroppedMangasController,
     createMangaController,
     updateMangaController,
     deleteMangaController

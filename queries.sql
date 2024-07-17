@@ -105,6 +105,34 @@ JOIN users u ON l.user_id = u.user_id
 JOIN manga m ON l.manga_id = m.manga_id
 WHERE u.email = 'charlie.black@example.com';
 
+-- Get all mangas with 'Reading' status
+SELECT u.username, u.email, m.title, l.status
+FROM user_library AS l
+INNER JOIN users AS u ON u.user_id = l.user_id
+INNER JOIN manga AS m ON m.manga_id = l.manga_id
+WHERE l.status = 'Reading';
+
+-- Get all mangas with 'Dropped' status
+SELECT u.username, u.email, m.title, l.status
+FROM user_library AS l
+INNER JOIN users AS u ON u.user_id = l.user_id
+INNER JOIN manga AS m ON m.manga_id = l.manga_id
+WHERE l.status = 'Dropped';
+
+-- Get all mangas with 'Finished' status
+SELECT u.username, u.email, m.title, l.status
+FROM user_library AS l
+INNER JOIN users AS u ON u.user_id = l.user_id
+INNER JOIN manga AS m ON m.manga_id = l.manga_id
+WHERE l.status = 'Finished';
+
+-- Get all mangas with 'Plan to Read' status
+SELECT u.username, u.email, m.title, l.status
+FROM user_library AS l
+INNER JOIN users AS u ON u.user_id = l.user_id
+INNER JOIN manga AS m ON m.manga_id = l.manga_id
+WHERE l.status = 'Plan to Read';
+
 --Create a new user
 INSERT INTO users (username, email, password, isadmin, islogged)
 VALUES (

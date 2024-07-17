@@ -61,6 +61,65 @@ const getMangaByAuthor = async (author) => {
     return result;
 };
 
+const getAllReadingMangas = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.getReadingMangas, [email]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+const getAllPlanToReadMangas = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.getPlanToReadMangas, [email]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const getAllDroppedMangas = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.getDroppedMangas, [email]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
+const getAllFinishedMangas = async (email) => {
+    let client, result;
+    try {
+        client = await pool.connect();
+        const data = await client.query(queries.getFinishedMangas, [email]);
+        result = data.rows;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result;
+};
+
 const createManga = async (manga) => {
     const { title, author, synopsis, cover_image_url, genres, themes } = manga;
     let client, result;
@@ -116,6 +175,10 @@ module.exports = {
     getMangaByGenre,
     getMangaByTitle,
     getMangaByAuthor,
+    getAllReadingMangas,
+    getAllDroppedMangas,
+    getAllFinishedMangas,
+    getAllPlanToReadMangas,
     createManga,
     updateManga,
     deleteManga
