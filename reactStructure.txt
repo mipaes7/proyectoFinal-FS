@@ -1,0 +1,30 @@
+src/
+|-- components/
+|   |-- App/
+|   |   |-- App.jsx
+|   |-- Header/
+|   |   |-- Header.jsx
+|   |   |-- Logo.jsx
+|   |   |-- SearchBar.jsx
+|   |   |-- AuthButtons.jsx
+|   |-- HomePage/
+|   |   |-- HomePage.jsx
+|   |   |-- LatestManga.jsx
+|   |   |-- NewestChapters.jsx
+|   |-- Auth/
+|   |   |-- LoginPage.jsx
+|   |   |-- RegisterPage.jsx
+|   |-- MangaDetailsPage/
+|   |   |-- MangaDetailsPage.jsx
+|   |   |-- MangaCover.jsx
+|   |   |-- MangaInfo.jsx
+|   |   |-- AddToLibraryButton.jsx
+|   |   |-- Synopsis.jsx
+|   |-- MyLibraryPage/
+|   |   |-- MyLibraryPage.jsx
+|   |   |-- LibrarySection.jsx
+|   |   |-- MangaItem.jsx
+|-- services/
+|   |-- api.js
+|-- App.jsx
+|-- index.jsx
