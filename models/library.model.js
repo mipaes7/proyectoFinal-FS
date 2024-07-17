@@ -100,9 +100,9 @@ module.exports = {
 // createLibraryEntry(newLibraryEntry).then(data => console.log(data));
 
 // const modifiedEntryStatus = {
-//     status: 'Finished',
-//     email: 'charlie.black@example.com',
-//     title: 'Shigurui'
+//     "status": "Finished",
+//     "email": "charlie.black@example.com",
+//     "title": "Shigurui"
 // }
 
 // updateLibraryEntryStatus(modifiedEntryStatus).then(data => console.log(data));

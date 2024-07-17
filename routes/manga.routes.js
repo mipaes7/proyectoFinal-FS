@@ -19,4 +19,16 @@ router.put('/', mangaController.updateMangaController);
 // DELETE http://localhost:3000/api/mangas?title=jonas@email.com
 router.delete('/', mangaController.deleteMangaController);
 
+// GET http://localhost:3000/api/mangas/reading/charlie.black@example.com
+router.get('/reading/:email', mangaController.getAllReadingMangasController);
+
+// GET http://localhost:3000/api/mangas/plan-to-read/charlie.black@example.com
+router.get('/plan-to-read/:email', mangaController.getAllPlanToReadMangasController);
+
+// GET http://localhost:3000/api/mangas/finished/charlie.black@example.com
+router.get('/finished/:email', mangaController.getAllFinishedMangasController);
+
+// GET http://localhost:3000/api/mangas/dropped/charlie.black@example.com
+router.get('/dropped/:email', mangaController.getAllDroppedMangasController);
+
 module.exports = router;
