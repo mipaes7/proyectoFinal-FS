@@ -1,7 +1,5 @@
 src/
 |-- components/
-|   |-- App/
-|   |   |-- App.jsx
 |   |-- Header/
 |   |   |-- Header.jsx
 |   |   |-- Logo.jsx

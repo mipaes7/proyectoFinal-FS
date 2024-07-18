@@ -9,14 +9,16 @@ import { MangaContext } from './context/mangaContext';
 
 function App() {
 
-  const [ mangas, setMangas ] = useState([]);
+  const [mangas, setMangas] = useState([]);
 
   return (
     <>
-      <Header></Header>
-      <MangaContext.Provider value={[mangas, setMangas]}>
-      <Main></Main>
-      </MangaContext.Provider>
+      <BrowserRouter>
+        <Header></Header>
+        <MangaContext.Provider value={[mangas, setMangas]}>
+          <Main></Main>
+        </MangaContext.Provider>
+      </BrowserRouter>
       <Footer></Footer>
     </>
   )

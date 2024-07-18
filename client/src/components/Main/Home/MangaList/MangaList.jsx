@@ -1,59 +1,48 @@
 import { useContext, useEffect, useState } from "react";
 import { MangaContext } from "../../../../context/mangaContext";
 import { v4 as uuidv4 } from 'uuid';
-import  MangaCard  from './MangaCard';
+import MangaCard from './MangaCard';
 import MangaSearch from "../MangaSearch";
-import MangaGenreFilter from "../MangaGenreFilter/MangaGenreFilter";
-
+import MangaListPagination from "../MangaListPagination/MangaListPagination";
 import { getMangas } from "../../../../services/mangas";
-import { getGenres } from "../../../../services/mangas";
 
 const MangaList = () => {
-
   const [mangas, setMangas] = useContext(MangaContext);
-  const [searchParams, setSearchParams] = useState({ searchTerm: "", selectedGenre: "" });
-  const [genres, setGenres] = useState([]);
+  const [searchParams, setSearchParams] = useState({ searchTerm: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const mangasPerPage = 15;
 
   useEffect(() => {
     const getMangaData = async () => {
       try {
-        const fetchedMangas = await getMangas();
-        setMangas(fetchedMangas);
-        const fetchedGenres = await getGenres();
-        setGenres(fetchedGenres);
+        const { searchTerm } = searchParams;
+        const fetchedMangas = await getMangas(currentPage, mangasPerPage, searchTerm);
+        
+        setMangas(fetchedMangas.data);
+        setTotalPages(fetchedMangas.pagination.last_visible_page);
+
       } catch (e) {
+
+        console.error(e);
         setMangas([]);
-        setGenres([]);
+
       }
-    }
+    };
     getMangaData();
-  }, [setMangas]);
+  }, [searchParams, currentPage]); 
 
   const handleSearch = (params) => {
     setSearchParams({ ...searchParams, ...params });
+    setCurrentPage(1); 
   };
 
-  const handleGenreSelect = (genre) => {
-    setSearchParams({ ...searchParams, selectedGenre: genre });
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
-
-  const filteredMangas = mangas.filter((manga) => {
-    const { searchTerm, selectedGenre } = searchParams;
-    const lowercasedSearchTerm = searchTerm.toLowerCase();
-
-    const matchesTitle = manga.title.toLowerCase().includes(lowercasedSearchTerm);
-    const matchesAuthor = manga.authors.some((author) =>
-      author.name.toLowerCase().includes(lowercasedSearchTerm)
-    );
-    const matchesGenre = selectedGenre === "" || manga.genres.some((genre) =>
-      genre.name.toLowerCase() === selectedGenre.toLowerCase()
-    );
-
-    return (matchesTitle || matchesAuthor) && matchesGenre;
-  });
 
   const renderMangaCard = () => {
-    return filteredMangas.map((manga) => (
+    return mangas.map((manga) => (
       <MangaCard
         key={uuidv4()}
         manga={manga}
@@ -62,13 +51,19 @@ const MangaList = () => {
     ));
   };
 
-  return <section>
-    <MangaSearch onSearch={handleSearch} />
-    <MangaGenreFilter genres={genres} onGenreSelect={handleGenreSelect} />
-    <article>
-    {mangas.length !== 0 ? renderMangaCard() : <p>Loading...</p>}
-    </article>
-  </section>;
+  return (
+    <section>
+      <MangaSearch onSearch={handleSearch} />
+      <article>
+        {mangas.length > 0 ? renderMangaCard() : <p>Loading...</p>}
+      </article>
+      <MangaListPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+    </section>
+  );
 };
 
 export default MangaList;

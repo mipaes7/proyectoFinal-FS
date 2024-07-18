@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const MangaCard = ({
-  manga: {title_english},
+  manga: {title, synopsis, mal_id},
   mangaCover: {large_image_url}
 }) => {
-  return <article className="mangaCard">
-    <div>
-      <img src={large_image_url} alt={title_english} />
+
+  const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = () => {
+    navigate(`/manga/${mal_id}`);
+  };
+
+  return <article
+   className="mangaCard"
+   onMouseEnter={() => setIsHovered(true)}
+   onMouseLeave={() => setIsHovered(false)}>
+    <div 
+    className="mangaCover"
+    style={{backgroundImage: `url(${large_image_url})`}}>
+      {isHovered && (
+        <div className="mangaSynopsis">
+          <p>{synopsis}</p>
+          <aside className="title-button-container">
+          <h3>{title}</h3>
+          <button onClick={handleClick}>{"\u{0279C}"}</button>
+          </aside>
+        </div>
+      )}
     </div>
-    <h3>{title_english}</h3>
   </article>;
 };
 

@@ -1,26 +1,20 @@
 import axios from 'axios';
 
-export const getMangas = async () => {
-    const res = await axios.get('https://api.jikan.moe/v4/manga');
-    const json = res.data;
-    // console.log(json.data);
-    return json.data;
+export const getMangas = async (page = 1, limit = 10, searchTerm = '') => {
+    if (searchTerm) {
+      const res = await axios.get(`https://api.jikan.moe/v4/manga?q=${searchTerm}&page=${page}&limit=${limit}`);
+      const json = res.data;
+      return json;
+    } else {
+      const res = await axios.get(`https://api.jikan.moe/v4/top/manga?page=${page}&limit=${limit}`);
+      const json = res.data;
+      return json;
+    }
 };
 
-export const getGenres = async () => {
-    const res = await axios.get('https://api.jikan.moe/v4/manga');
-    const json = res.data;
-  
-    const allGenres = json.data
-      .flatMap(manga => manga.genres)
-      .reduce((acc, genre) => {
-        if (!acc.some(g => g.mal_id === genre.mal_id)) {
-          acc.push(genre);
-        }
-        return acc;
-      }, []);
-    
-    return allGenres;
-  };
-
-getGenres();
+export const getMangaById = async (id) => {
+  const res = await axios.get(`https://api.jikan.moe/v4/manga/${id}`);
+  const json = res.data.data;
+  console.log(json);
+  return json;
+};
