@@ -15,6 +15,5 @@ export const getMangas = async (page = 1, limit = 10, searchTerm = '') => {
 export const getMangaById = async (id) => {
   const res = await axios.get(`https://api.jikan.moe/v4/manga/${id}`);
   const json = res.data.data;
-  console.log(json);
   return json;
 };
