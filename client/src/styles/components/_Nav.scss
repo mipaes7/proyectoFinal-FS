@@ -1,0 +1,96 @@
+@import '../utils/variables.scss';
+
+.bm-burger-button {
+    position: fixed;
+    width: 36px;
+    height: 30px;
+    left: 36px;
+    top: 42px;
+  }
+  
+  .bm-burger-bars {
+    background: $white;
+  }
+  
+  .bm-burger-bars-hover {
+    background: $yellow;
+  }
+  
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  .bm-cross {
+    background: #bdc3c7;
+    display: none;
+  }
+  
+  .bm-menu-wrap {
+    position: fixed;
+    height: 100vh;
+  }
+  
+  .bm-menu {
+    background: $blue;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+  }
+  
+  .bm-morph-shape {
+    fill: #373a47;
+  }
+  
+  .bm-item-list {
+    color: $yellow;
+    padding: 0.8em;
+  }
+  
+  .bm-item {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    color: $gray;
+    transition: color 0.2s;
+    font-weight: bold;
+  }
+  
+  .bm-item:hover {
+    color: $yellow;
+  }
+  
+  .bm-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  
+  .authContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: $gray;
+  }
+
+  .menu-item {
+    color: $white;
+    transition: color 0.2s;
+    font-weight: bold;
+  }
+
+  .logoutBtn {
+    color: $black;
+    transition: color 0.2s;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+  }
+
+  .logoutBtn:hover {
+    background-color: $black;
+    border-color: $yellow;
+    color: $yellow;
+    cursor: pointer;
+  }
+
+  .menu-item:hover {
+    color: $yellow;
+  }

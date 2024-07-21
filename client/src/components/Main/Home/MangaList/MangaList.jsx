@@ -32,6 +32,10 @@ const MangaList = () => {
     getMangaData();
   }, [searchParams, currentPage]); 
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const handleSearch = (params) => {
     setSearchParams({ ...searchParams, ...params });
     setCurrentPage(1); 
@@ -52,9 +56,9 @@ const MangaList = () => {
   };
 
   return (
-    <section>
+    <section className="searchAndListContainer">
       <MangaSearch onSearch={handleSearch} />
-      <article>
+      <article className="cardsContainer">
         {mangas.length > 0 ? renderMangaCard() : <p>Loading...</p>}
       </article>
       <MangaListPagination

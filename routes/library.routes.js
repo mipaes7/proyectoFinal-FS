@@ -1,4 +1,5 @@
 const libraryController = require('../controllers/library.controller');
+const authMiddleware = require('../middlewares/authMiddleware');
 const router = require('express').Router();
 
 // GET http://localhost:3000/api/libraries

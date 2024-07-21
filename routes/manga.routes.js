@@ -4,6 +4,9 @@ const router = require('express').Router();
 // GET http://localhost:3000/api/mangas
 router.get('/', mangaController.getAllMangasController);
 
+// POST http://localhost:3000/api/mangas
+router.post('/', mangaController.createMangaController);
+
 // GET http://localhost:3000/api/mangas?author=norio
 router.get('/author/:author', mangaController.getMangaByAuthorController);
 

@@ -1,0 +1,9 @@
+@import '../utils/variables.scss';
+
+.mainContainer {
+    // height: 70vh;
+    background-color: $blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

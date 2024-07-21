@@ -1,18 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { slide as Menu } from 'react-burger-menu';
+import { Link } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = ({ user, handleLogout }) => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/library">My Library</Link>
-        </li>
-      </ul>
-    </nav>
+    <Menu>
+      <Link to="/" className="menu-item">Home</Link>
+      {user ? (
+        <>
+          <div className='authContainer'>
+            <Link to="/library" className="menu-item">My Library</Link>
+            <button className="logoutBtn" onClick={handleLogout}>Logout</button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className='authContainer'>
+            <Link to="/login" className="menu-item">Login</Link>
+            <Link to="/register" className="menu-item">Register</Link>
+          </div>
+        </>
+      )}
+    </Menu>
   );
 };
 

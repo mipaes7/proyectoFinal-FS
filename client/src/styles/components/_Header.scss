@@ -1,0 +1,26 @@
+@import '../utils/variables.scss';
+
+header {
+    background-color: $yellow;
+    padding: 0px 14px 0px 0px;
+    height: 17vh;
+}
+
+.mainTitle {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border: 3px solid $gray;
+    border-radius: 0 8px 8px 0;
+    color: $white;
+    background-color: $black;
+
+    img {
+        height: 54px;
+        width: 54px;
+        border-radius: 50%;
+        border: 4px solid $yellow;
+    }
+}
