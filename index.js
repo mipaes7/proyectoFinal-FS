@@ -1,8 +1,12 @@
 const express = require("express");
 const app = express(); // Inicializar servidor
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const port = 3000;
 // const path = require('path'); // Descomentar para usar jsdoc
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 //Importar middlewares
 const morgan = require("./middlewares/morgan");
@@ -15,11 +19,13 @@ const usersRoutes = require('./routes/users.routes');
 const mangasRoutes = require('./routes/manga.routes');
 const libraryRoutes = require('./routes/library.routes');
 
-
-// Importar Rutas Web
-
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json()); // Habilito recepción de JSON en servidor
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 // app.use(cookieParser());
 
 //Rutas API

@@ -44,7 +44,7 @@
     .mangaContent {
       display: flex;
       width: 100%;
-      max-width: 800px;
+      max-width: 60%;
       margin: 20px 0;
       background: $black;
       padding: 20px;
@@ -89,14 +89,17 @@
           padding: 10px 20px;
           background-color: $yellow;
           color: $white;
-          border: none;
+          font-weight: bold;
+          border: 3px solid $white;
           border-radius: 5px;
           cursor: pointer;
           align-self: flex-start;
           transition: background-color 0.3s;
   
           &:hover {
-            background-color: darken($yellow, 10%);
+            background-color: $blue;
+            color: $yellow;
+            border: 3px solid $yellow;
           }
         }
       }
@@ -108,7 +111,7 @@
   
     .mangaSynopsis {
       width: 100%;
-      max-width: 800px;
+      max-width: 90%;
       background: $black;
       padding: 20px;
       border-radius: 10px;

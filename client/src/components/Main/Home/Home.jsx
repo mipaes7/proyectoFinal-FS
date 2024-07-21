@@ -3,7 +3,7 @@ import MangaList from "./MangaList";
 import MangaSearch from "./MangaSearch";
 
 const Home = () => {
-  return <section>
+  return <section className="home">
     {/* <MangaSearch /> */}
     <MangaList />
   </section>;

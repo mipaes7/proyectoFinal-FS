@@ -2,8 +2,11 @@ const user = require('../models/users.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const dotenv = require('dotenv');
+dotenv.config();
 const jwt_secret = process.env.ULTRA_SECRET_KEY;
 
+// Create User Controller
 const createUserController = async (req, res) => {
     const newUser = req.body;
 
@@ -21,7 +24,7 @@ const createUserController = async (req, res) => {
                 email: newUser.email,
                 password: hashPassword,
                 isadmin: newUser.isadmin,
-                islogged: false // Default value for islogged
+                islogged: false 
             };
 
             const response = await user.createUser(userToCreate);
@@ -29,14 +32,15 @@ const createUserController = async (req, res) => {
                 items_created: response
             });
         } catch (error) {
-            console.log('Database Error:', error); // Log the error for debugging
-            res.status(500).json({ error: "Error en la BBDD" });
+            console.log('Database Error:', error);
+            res.status(500).json({ error: "Error in the Database" });
         }
     } else {
-        res.status(400).json({ error: "Faltan campos en la entrada" });
+        res.status(400).json({ error: "All fields are required" });
     }
 };
 
+// Read Users Controller
 const readUsersController = async (req, res) => {
     let users;
     try {
@@ -52,6 +56,7 @@ const readUsersController = async (req, res) => {
     }
 };
 
+// Update User Controller
 const updateUserController = async (req, res) => {
     const modifiedUser = req.body;
     if ("email" in modifiedUser) {
@@ -68,21 +73,21 @@ const updateUserController = async (req, res) => {
     }
 };
 
+// Delete User Controller
 const deleteUserController = async (req, res) => {
     let users;
     try {
         users = await user.deleteUser(req.query.email);
-        res.status(200).json(users); // [] con las users encontradas
+        res.status(200).json(users); // [] with the found users
     } catch (error) {
-        res.status(500).json({ error: 'Error en la BBDD' });
+        res.status(500).json({ error: 'Database error' });
     }
 };
 
+// Login Controller
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        console.log("Request Body:", req.body);
 
         const data = await user.getUserByEmail(email);
 
@@ -102,12 +107,16 @@ const login = async (req, res) => {
                 isadmin: userData.isadmin
             };
 
-            const token = jwt.sign(userForToken, process.env.JWT_SECRET, { expiresIn: '20m' });
+            const token = jwt.sign(userForToken, jwt_secret, { expiresIn: '20m' });
 
-            res.cookie('token', token, { httpOnly: true, secure: true, maxAge: 20 * 60 * 1000 });
+            res.cookie('token', token, { httpOnly: true, sameSite: 'none', maxAge: 20 * 60 * 1000 });
+            res.cookie('email', email, { httpOnly: true, sameSite: 'none', maxAge: 20 * 60 * 1000 });
+            
+            // console.log('Response headers:', res.getHeaders());
 
-            return res.status(200).json({
+            res.status(200).json({
                 msg: 'Correct authentication',
+                token
             });
         } else {
             return res.status(400).json({ msg: 'Incorrect user or password' });
@@ -118,9 +127,12 @@ const login = async (req, res) => {
     }
 };
 
+// Logout Controller
 const logout = async (req, res) => {
     try {
+        console.log(req.cookies);
         const token = req.cookies.token;
+        console.log('token', token)
 
         if (!token) {
             return res.status(400).json({ message: 'No token provided' });
@@ -134,6 +146,7 @@ const logout = async (req, res) => {
         await user.setLoggedFalse(decoded.email);
 
         res.clearCookie('token');
+        res.clearCookie('email');
 
         return res.status(200).json({ message: 'Logged out successfully' });
     } catch (error) {

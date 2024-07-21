@@ -108,7 +108,7 @@ const MangaLibrary = () => {
         {Object.entries(columns).map(([columnId, column]) => {
           return (
             <div key={columnId} className="column">
-              <h2>{column.title}</h2>
+              <h2 className="columnTitle">{column.title}</h2>
               <Droppable droppableId={columnId} key={columnId}>
                 {(provided) => (
                   <div

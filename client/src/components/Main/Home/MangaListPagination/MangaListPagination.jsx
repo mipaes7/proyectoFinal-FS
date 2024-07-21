@@ -16,11 +16,11 @@ const MangaListPagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <article className="pagination">
-      <button onClick={handlePreviousPage} disabled={currentPage === 1}>
+      <button className="pageBtn" onClick={handlePreviousPage} disabled={currentPage === 1}>
         Previous
       </button>
-      <span>Page {currentPage} of {totalPages}</span>
-      <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+      <span className="pageInfo">Page {currentPage} of {totalPages}</span>
+      <button className="pageBtn" onClick={handleNextPage} disabled={currentPage === totalPages}>
         Next
       </button>
     </article>

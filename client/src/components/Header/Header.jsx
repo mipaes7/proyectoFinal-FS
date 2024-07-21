@@ -17,9 +17,9 @@ const Header = ({ user, setUser }) => {
   };
 
   return (
-    <header>
-      <h1>Manga Library</h1>
+    <header className='mainHeader'>
       <Nav user={user} handleLogout={handleLogout} />
+      <h1 className='mainTitle'><img src="/icono2.jpg" alt="icono" />Manga Library</h1>
     </header>
   );
 };

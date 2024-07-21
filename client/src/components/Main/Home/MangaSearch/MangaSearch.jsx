@@ -15,15 +15,16 @@ const MangaSearch = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSearchSubmit}>
+    <form onSubmit={handleSearchSubmit} className="formSearch">
       <DebounceInput
         minLength={2}
         debounceTimeout={3000}
         placeholder="Search by keyword"
         value={searchTerm}
         onChange={handleSearchTermChange}
+        className="textinput"
       />
-      <button type="submit">
+      <button type="submit" className="inputBtn">
         Search
       </button>
     </form>

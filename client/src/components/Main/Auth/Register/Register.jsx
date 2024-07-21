@@ -35,26 +35,14 @@ const Register = ({ setUser }) => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-        </label>
-        <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        </label>
-        <label>
-          Admin:
-          <input type="checkbox" name="isadmin" checked={formData.isadmin} onChange={handleChange} />
-        </label>
-        <button type="submit">Register</button>
+    <div className='registerContainer'>
+      <form onSubmit={handleSubmit} className='registerForm'>
+      <h2 className='registerTitle'>Register</h2>
+          <input className='registerInput' placeholder='Username' type="text" name="username" value={formData.username} onChange={handleChange} required />
+          <input className='registerInput' placeholder='Email' type="email" name="email" value={formData.email} onChange={handleChange} required />
+          <input className='registerInput' placeholder='Password' type="password" name="password" value={formData.password} onChange={handleChange} required />
+          {/* <input type="checkbox" name="isadmin" checked={formData.isadmin} onChange={handleChange} /> */}
+        <button className='registerSubmitBtn' type="submit">Register</button>
       </form>
     </div>
   );

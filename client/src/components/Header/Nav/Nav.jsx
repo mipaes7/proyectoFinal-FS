@@ -1,22 +1,27 @@
 import React from 'react';
+import { slide as Menu } from 'react-burger-menu';
 import { Link } from 'react-router-dom';
 
 const Nav = ({ user, handleLogout }) => {
   return (
-    <nav>
-      <Link to="/">Home</Link>
+    <Menu>
+      <Link to="/" className="menu-item">Home</Link>
       {user ? (
         <>
-          <Link to="/library">Library</Link>
-          <button onClick={handleLogout}>Logout</button>
+          <div className='authContainer'>
+            <Link to="/library" className="menu-item">My Library</Link>
+            <button className="logoutBtn" onClick={handleLogout}>Logout</button>
+          </div>
         </>
       ) : (
         <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          <div className='authContainer'>
+            <Link to="/login" className="menu-item">Login</Link>
+            <Link to="/register" className="menu-item">Register</Link>
+          </div>
         </>
       )}
-    </nav>
+    </Menu>
   );
 };
 

@@ -16,7 +16,7 @@ const Main = ({ user, setUser }) => {
   });
 
   return (
-    <main>
+    <main className="mainContainer">
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/library' element={<MangaLibrary library={library} setLibrary={setLibrary} />} />

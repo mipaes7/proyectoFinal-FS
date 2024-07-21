@@ -11,6 +11,7 @@ const MangaDetails = ({ user, setLibrary }) => {
       try {
         const response = await axios.get(`https://api.jikan.moe/v4/manga/${id}`);
         setManga(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -21,9 +22,14 @@ const MangaDetails = ({ user, setLibrary }) => {
 
   const formatAuthorName = (data) => {
     return data.map(author => {
-      const [lastName, firstName] = author.name.split(', ');
-      return `${firstName} ${lastName}`;
-    }).join(', ');
+      const nameParts = author.name.split(', ');
+      if (nameParts.length === 2) {
+          const [lastName, firstName] = nameParts;
+          return `${firstName} ${lastName}`;
+      } else {
+          return nameParts[0];
+      }
+  }).join(', ');
   };
 
   const handleAddToLibrary = async () => {
@@ -83,9 +89,9 @@ const MangaDetails = ({ user, setLibrary }) => {
               {manga.themes.length !== 0 ? <p><strong>Themes:</strong> {manga.themes.map(theme => theme.name).join(', ')}</p> : ''}
               {manga.demographics.length !== 0 ? <p><strong>Demographic:</strong> {manga.demographics.map(demographic => demographic.name).join(', ')}</p> : ''}
               <p><strong>Status:</strong> {manga.status}</p>
-              <p><strong>Volumes:</strong> {manga.volumes}</p>
-              <p><strong>Chapters:</strong> {manga.chapters}</p>
-              <p><strong>MAL Rating:</strong> {manga.score} (Votes:{manga.scored_by})</p>
+              {manga.volumes !== null ? <p><strong>Volumes:</strong> {manga.volumes}</p> : ''}
+              {manga.chapters !== null ? <p><strong>Chapters:</strong> {manga.chapters}</p> : ''}
+              <p><strong>MAL Rating:</strong> {manga.score} (Votes: {manga.scored_by})</p>
             </div>
             <button onClick={handleAddToLibrary} className="addToLibraryButton">Add to Library</button>
           </div>
