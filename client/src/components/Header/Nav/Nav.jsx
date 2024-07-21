@@ -1,17 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = ({ user, handleLogout }) => {
   return (
     <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/library">My Library</Link>
-        </li>
-      </ul>
+      <Link to="/">Home</Link>
+      {user ? (
+        <>
+          <Link to="/library">Library</Link>
+          <button onClick={handleLogout}>Logout</button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      )}
     </nav>
   );
 };

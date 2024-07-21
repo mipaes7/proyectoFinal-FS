@@ -19,7 +19,7 @@ const MangaSearch = ({ onSearch }) => {
       <DebounceInput
         minLength={2}
         debounceTimeout={3000}
-        placeholder="Search by title or author"
+        placeholder="Search by keyword"
         value={searchTerm}
         onChange={handleSearchTermChange}
       />

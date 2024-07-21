@@ -12,8 +12,10 @@
   "dependencies": {
     "@hello-pangea/dnd": "^16.6.0",
     "axios": "^1.7.2",
+    "js-cookie": "^3.0.5",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
+    "react-burger-menu": "^3.0.9",
     "react-debounce-input": "^3.3.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.0",

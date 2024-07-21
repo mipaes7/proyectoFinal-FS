@@ -1,38 +1,66 @@
-// src/components/MangaLibrary/MangaLibrary.jsx
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import Cookies from 'js-cookie';
 import LibraryCard from './LibraryCard';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
-const MangaLibrary = ({ library }) => {
+const MangaLibrary = () => {
   const [columns, setColumns] = useState({
-    "planToRead": {
-      title: "Plan to Read",
-      items: library.planToRead
-    },
-    "reading": {
-      title: "Reading",
-      items: library.reading
-    },
-    "finished": {
-      title: "Finished",
-      items: library.finished
-    },
-    "dropped": {
-      title: "Dropped",
-      items: library.dropped
-    }
+    "planToRead": { title: "Plan to Read", items: [] },
+    "reading": { title: "Reading", items: [] },
+    "finished": { title: "Finished", items: [] },
+    "dropped": { title: "Dropped", items: [] }
   });
 
   useEffect(() => {
-    setColumns({
-      "planToRead": { title: "Plan to Read", items: library.planToRead },
-      "reading": { title: "Reading", items: library.reading },
-      "finished": { title: "Finished", items: library.finished },
-      "dropped": { title: "Dropped", items: library.dropped },
-    });
-  }, [library]);
+    const fetchLibrary = async () => {
+      const email = Cookies.get('email');
+      const token = Cookies.get('token');
+      if (!email || !token) return;
 
-  const onDragEnd = (result) => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/libraries?email=${email}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const library = response.data.map(manga => ({
+          ...manga,
+          id: uuidv4() 
+        }));
+        setColumns({
+          "planToRead": { title: "Plan to Read", items: library.filter(manga => manga.status === 'Plan to Read') },
+          "reading": { title: "Reading", items: library.filter(manga => manga.status === 'Reading') },
+          "finished": { title: "Finished", items: library.filter(manga => manga.status === 'Finished') },
+          "dropped": { title: "Dropped", items: library.filter(manga => manga.status === 'Dropped') },
+        });
+      } catch (error) {
+        console.error("Error fetching library:", error);
+      }
+    };
+
+    fetchLibrary();
+  }, []);
+
+  const updateMangaStatus = async (email, title, status) => {
+    const token = Cookies.get('token');
+    try {
+      await axios.put('http://localhost:3000/api/libraries', {
+        email,
+        title,
+        status
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.error("Error updating manga status:", error);
+    }
+  };
+
+  const onDragEnd = async (result) => {
     if (!result.destination) return;
     const { source, destination } = result;
 
@@ -55,6 +83,9 @@ const MangaLibrary = ({ library }) => {
           items: destItems
         }
       });
+
+      const email = Cookies.get('email');
+      await updateMangaStatus(email, removed.title, destColumn.title);
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
