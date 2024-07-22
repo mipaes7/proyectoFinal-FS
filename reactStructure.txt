@@ -1,0 +1,25 @@
+├── client
+│   ├── public
+│   ├── src
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── context
+│   │   ├── services
+│   │   ├── styles
+│   │   └── App.js
+│   └── package.json
+├── config
+├── controllers
+├── middlewares
+├── models
+├── node_modules
+├── queries
+├── routes
+├── .env
+├── .gitignore
+├── index.js
+├── package-lock.json
+├── package.json
+├── queries.sql
+├── reactStructure.txt
+└── README.md
